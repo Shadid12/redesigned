@@ -1,0 +1,12 @@
+@import '~antd/dist/antd.css';
+
+.App {
+  text-align: center;
+}
+
+.main-sidenav-container {
+    border: solid 2px red;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
