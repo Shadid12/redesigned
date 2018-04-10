@@ -1,0 +1,13 @@
+.secondary-main {
+    margin-top: 15px;
+}
+
+.search-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.sec-content-wrapper {
+    padding: 20px;
+}

@@ -6,7 +6,7 @@ import './css/main-side-nav.css';
 export default class MainSideNav extends React.Component {
     render() {
         return(
-            <div>
+            <div className="main-side-wrapper">
                 <Row>
                     <div className="profile-img">
                         <Avatar 
