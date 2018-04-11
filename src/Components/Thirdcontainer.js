@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row } from 'antd';
 import { Input } from 'antd';
+import MessageList from './MessageList';
 import './css/third-container.css';
 
 export default class Thirdcontainer extends React.Component {
@@ -11,7 +12,7 @@ export default class Thirdcontainer extends React.Component {
             <div className="third-container-wrapper">
                 <Row>
                     <div className="message--container">
-                        Hello messages
+                        <MessageList />
                     </div>
                     <div>
                         <Search placeholder="write message" enterButton="Post" size="large" />

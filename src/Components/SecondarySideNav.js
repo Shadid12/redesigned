@@ -39,7 +39,7 @@ export default class SecondarySideNav extends Component {
                         renderItem={item => (
                         <List.Item>
                             <List.Item.Meta
-                            avatar={<Avatar style={{ backgroundColor: '#08c' }} icon="user" />}
+                            avatar={<Avatar icon="dot-chart" />}
                             title={<a href="#">{item.title}</a>}
                             description="Ant Design, a design language for background applications, is refined by Ant UED Team"
                             />

@@ -3,7 +3,6 @@
 }
 
 .message--container {
-    width: 420px;
-    height: 75%;
-    overflow: auto;
+    margin-top: 20px;
+    padding: 20px;
 }
