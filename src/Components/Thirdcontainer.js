@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row } from 'antd';
-import { Input } from 'antd';
+import { Input , notification, Icon} from 'antd';
 import openSocket from 'socket.io-client';
 
 import MessageList from './MessageList';
@@ -17,7 +17,11 @@ export default class Thirdcontainer extends React.Component {
         this.socket = openSocket('localhost:5000', { query: "foo=bar" });
 
         this.socket.on('JOINED_ROOM', (data) => {
-            console.log(data.user);
+            notification.open({
+                message: `${data.user} joined conversation`,
+                description: 'A new user has joined conversation',
+                icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />,
+            });
         });
     }
 

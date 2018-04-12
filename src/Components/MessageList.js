@@ -77,7 +77,6 @@ export default class MessageList extends React.Component {
                             title={<a href="#">{item.name.last}</a>}
                             description={item.email}
                         />
-                        <div>Content</div>
                     </List.Item>
                     )}
                 >
