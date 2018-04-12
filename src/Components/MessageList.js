@@ -44,11 +44,6 @@ export default class MessageList extends React.Component {
 
     componentWillMount() {
         this.getMessages();
-        // this.getData((res) => {
-        //   this.setState({
-        //     data: res.results,
-        //   });
-        // });
     }
 
     componentDidUpdate() {
@@ -117,12 +112,5 @@ export default class MessageList extends React.Component {
 
     handleMessage = (e) => { 
         this.setState({message: e.target.value});
-    }
-
-    scrollToBottom = () => {
-        // const messagesContainer = ReactDOM.findDOMNode(this.messagesContainer);
-        // this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
-        // document.querySelector(".message-placeholder").scrollTo(0,document.querySelector(".message-placeholder").scrollHeight);
-
     }
 }
