@@ -26,16 +26,11 @@ export default class Thirdcontainer extends React.Component {
     }
 
     render() {
-        const Search = Input.Search;
-
         return(
             <div className="third-container-wrapper">
                 <Row>
                     <div className="message--container">
-                        <MessageList />
-                    </div>
-                    <div>
-                        <Search placeholder="write message" enterButton="Post" size="large" />
+                        <MessageList socket={this.socket}/>
                     </div>
                 </Row>
             </div>

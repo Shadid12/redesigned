@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, message, Avatar, Spin } from 'antd';
+import { List, message, Avatar, Spin, Input } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import reqwest from 'reqwest';
 
@@ -8,9 +8,19 @@ export default class MessageList extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            data: [],
+            data: [
+                {
+                    name: "john doe",
+                    message: "Hey this is a message"
+                },
+                {
+                    name: "jane stiffler",
+                    message: "Hello I am here man"
+                }
+            ],
             loading: false,
             hasMore: true,
+            message: ''
         }
     }
 
@@ -26,12 +36,19 @@ export default class MessageList extends React.Component {
         });
     }
 
-    componentWillMount() {
-        this.getData((res) => {
-          this.setState({
-            data: res.results,
-          });
+    getMessages = () => {
+        this.props.socket.on('RECEIVE_MESSAGE', (o) => {
+            this.setState({data: [...this.state.data, o]});
         });
+    }
+
+    componentWillMount() {
+        this.getMessages();
+        // this.getData((res) => {
+        //   this.setState({
+        //     data: res.results,
+        //   });
+        // });
     }
 
 
@@ -74,8 +91,8 @@ export default class MessageList extends React.Component {
                     <List.Item key={item.id}>
                         <List.Item.Meta
                             avatar={<Avatar style={{ backgroundColor: '#08c' }} icon="user" />}
-                            title={<a href="#">{item.name.last}</a>}
-                            description={item.email}
+                            title={<a href="#">{item.name}</a>}
+                            description={item.message}
                         />
                     </List.Item>
                     )}
@@ -83,7 +100,31 @@ export default class MessageList extends React.Component {
                     {this.state.loading && this.state.hasMore && <Spin className="demo-loading" />}
                 </List>
             </InfiniteScroll>
+
+            <div>
+                <Input  placeholder="write message" 
+                        onChange={this.handleMessage}
+                        value={this.state.message}
+                        onKeyPress={this.handleSend}
+                        size="large" />
+            </div>
+
         </div>
         )
+    }
+
+    handleSend = (e) => {
+        if (e.key == 'Enter') {
+            let d = {
+                name: "Anon",
+                message: this.state.message
+            };
+            this.props.socket.emit('SEND_MESSAGE', d);
+            this.setState({ message: '' });
+        }
+    }
+
+    handleMessage = (e) => { 
+        this.setState({message: e.target.value});
     }
 }
