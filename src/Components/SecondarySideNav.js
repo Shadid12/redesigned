@@ -1,45 +1,30 @@
 import React, { Component } from 'react';
+import { observer } from "mobx-react"
 import { Input, List, Avatar } from 'antd';
 
 
 import './css/secondary-nav.css';
 
+@observer
 export default class SecondarySideNav extends Component { 
     render() {
 
-        const data = [
-            {
-              title: 'Title 1',
-              description: "Ant Design, a design language for background applications, is refined by Ant UED Team"
-            },
-            {
-              title: 'Title 2',
-              description: "Ant Design, a design language for background applications, is refined by Ant UED Team"
-            },
-            {
-              title: 'Title 3',
-              description: "Ant Design, a design language for background applications, is refined by Ant UED Team"
-            },
-            {
-              title: 'Title 4',
-              description: "Ant Design, a design language for background applications, is refined by Ant UED Team"
-            },
-        ];
+        const {data, filter, filteredData} = this.props.store;
 
-        const Search = Input.Search;
         return(
             <div className="secondary-main">
                 <div className="search-wrapper">
-                    <Search
+                    <Input
                         placeholder="input search text"
-                        onSearch={value => console.log(value)}
+                        value={filter}
+                        onChange={this.filter}
                         style={{ width: 200 }}
                     />
                 </div>
                 <div className="sec-content-wrapper">
                     <List
                         itemLayout="horizontal"
-                        dataSource={data}
+                        dataSource={filteredData}
                         renderItem={item => (
                         <List.Item>
                             <List.Item.Meta
@@ -53,5 +38,9 @@ export default class SecondarySideNav extends Component {
                 </div>
             </div>
         )
+    }
+
+    filter = (e) => {
+        this.props.store.filter = e.target.value
     }
 }

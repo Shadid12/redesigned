@@ -4,6 +4,10 @@ import SecondarySideNav from './Components/SecondarySideNav';
 import ThirdContainer from './Components/Thirdcontainer';
 import { Row, Col } from 'antd';
 
+// stores
+import PluginStore from './stores/PluginStore';
+
+
 import './App.css';
 
 export default class App extends Component {
@@ -15,7 +19,7 @@ export default class App extends Component {
                         <MainSideNav />
                     </Col>
                     <Col span={6}>
-                        <SecondarySideNav />
+                        <SecondarySideNav store={PluginStore}/>
                     </Col>
                     <Col span={8}>
                         <ThirdContainer />
