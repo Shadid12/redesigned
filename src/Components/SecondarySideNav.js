@@ -10,15 +10,19 @@ export default class SecondarySideNav extends Component {
         const data = [
             {
               title: 'Title 1',
+              description: "Ant Design, a design language for background applications, is refined by Ant UED Team"
             },
             {
               title: 'Title 2',
+              description: "Ant Design, a design language for background applications, is refined by Ant UED Team"
             },
             {
               title: 'Title 3',
+              description: "Ant Design, a design language for background applications, is refined by Ant UED Team"
             },
             {
               title: 'Title 4',
+              description: "Ant Design, a design language for background applications, is refined by Ant UED Team"
             },
         ];
 
@@ -41,7 +45,7 @@ export default class SecondarySideNav extends Component {
                             <List.Item.Meta
                             avatar={<Avatar icon="dot-chart" />}
                             title={<a href="#">{item.title}</a>}
-                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                            description={item.description}
                             />
                         </List.Item>
                         )}
