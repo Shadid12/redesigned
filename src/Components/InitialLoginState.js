@@ -46,7 +46,9 @@ export default class InitialLoginState extends Component {
                 username: response.profileObj.givenName,
                 img: response.profileObj.imageUrl
             }
-            console.log(userObject);
+            this.props.store.userObject = userObject;
+            this.props.store.loggedin = true;
+            // console.log(userObject);
         }
         else {
             console.log('Could not authorize');

@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import InitialMainState from './Components/InitialMainState';
 import InitialLoginState from './Components/InitialLoginState';
+import { observer } from "mobx-react"
+
+// stores
+// import UserDataStore from './stores/UserDataStore';
 
 import './App.css';
 
+@observer
 export default class App extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            user_logged_in: false
-        }
-    }
     render() {
 
-        const current_state = this.state.user_logged_in ? (
+        const current_state = this.props.store.loggedin ? (
             <InitialMainState />
-        ) : ( <InitialLoginState /> )
+        ) : ( <InitialLoginState store={this.props.store} /> )
 
         return(
             <div>
