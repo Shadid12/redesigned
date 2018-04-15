@@ -1,7 +1,7 @@
 import React from 'react';
 import { List, message, Avatar, Spin, Input } from 'antd';
 import reqwest from 'reqwest';
-
+import axios from 'axios';
 
 export default class MessageList extends React.Component {
     constructor(props) {
@@ -104,12 +104,37 @@ export default class MessageList extends React.Component {
                 name: this.props.store.userObject.username,
                 message: this.state.message
             };
-            this.props.socket.emit('SEND_MESSAGE', d);
-            this.setState({ message: '' });
+
+            // check if translation enabled 
+            if (this.state.message.includes("@translate") && this.props.store.userObject.translation_token ) {
+                let k = this.state.message.split(" ");
+                let target = k[1];
+                let message = this.state.message.split(k[1] + " ").pop();
+                this.getTranslatedMessage( message , target, d);
+            } else {
+                this.props.socket.emit('SEND_MESSAGE', d);
+                this.setState({ message: '' });
+            }
         }
     }
 
     handleMessage = (e) => { 
         this.setState({message: e.target.value});
     }
+
+
+    getTranslatedMessage = (message, target, d) => {
+        axios.defaults.headers.common['Authorization'] = "Bearer " + this.props.store.userObject.translation_token;
+        axios.post(`https://translation.googleapis.com/language/translate/v2`,
+                    {
+                        "q": message,
+                        "target": target
+                    }
+                )
+                .then( (response) => {
+                    d.message = response.data.data.translations[0].translatedText;
+                    this.props.socket.emit('SEND_MESSAGE', d);
+                    this.setState({ message: '' });
+    });   
+}
 }

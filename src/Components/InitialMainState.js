@@ -17,7 +17,7 @@ export default class initialMainState extends Component {
                         <MainSideNav store={UserDataStore}/>
                     </Col>
                     <Col span={6}>
-                        <SecondarySideNav store={PluginStore}/>
+                        <SecondarySideNav store={PluginStore} userDataStore={UserDataStore}/>
                     </Col>
                     <Col span={8}>
                         <ThirdContainer store={UserDataStore}/>

@@ -3,7 +3,8 @@ import { observable } from 'mobx';
 export class UserDataStore {
     @observable userObject = {
         name: '',
-        img: ''
+        img: '',
+        translation_token: ''
     }
 
     @observable loggedin =  false;
