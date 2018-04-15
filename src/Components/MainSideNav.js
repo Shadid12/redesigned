@@ -1,16 +1,22 @@
 import React from 'react';
 import { Row, Col, Icon, Avatar } from 'antd';
+import { observer } from "mobx-react"
 
 import './css/main-side-nav.css';
 
+@observer
 export default class MainSideNav extends React.Component {
     render() {
+        let img = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+        if (this.props.store.userObject.img) {
+            img = this.props.store.userObject.img;
+        }
         return(
             <div className="main-side-wrapper">
                 <Row>
                     <div className="profile-img">
                         <Avatar 
-                            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" 
+                            src={img}
                             size="large"
                         />
                     </div>

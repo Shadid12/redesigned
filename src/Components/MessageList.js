@@ -99,9 +99,9 @@ export default class MessageList extends React.Component {
     }
 
     handleSend = (e) => {
-        if (e.key == 'Enter') {
+        if (e.key === 'Enter') {
             let d = {
-                name: "Anon",
+                name: this.props.store.userObject.username,
                 message: this.state.message
             };
             this.props.socket.emit('SEND_MESSAGE', d);

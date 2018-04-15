@@ -6,6 +6,7 @@ import { Row, Col } from 'antd';
 
 // stores
 import PluginStore from '../stores/PluginStore';
+import UserDataStore from '../stores/UserDataStore';
 
 export default class initialMainState extends Component {
     render() {
@@ -13,13 +14,13 @@ export default class initialMainState extends Component {
             <div>
                 <Row>
                     <Col span={2}>
-                        <MainSideNav />
+                        <MainSideNav store={UserDataStore}/>
                     </Col>
                     <Col span={6}>
                         <SecondarySideNav store={PluginStore}/>
                     </Col>
                     <Col span={8}>
-                        <ThirdContainer />
+                        <ThirdContainer store={UserDataStore}/>
                     </Col>
                 </Row>
             </div>

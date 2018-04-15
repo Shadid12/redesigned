@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import { Modal, Button} from 'antd';
-
+import random from 'random-name';
 
 import './css/login-state.css';
 
@@ -32,7 +32,7 @@ export default class InitialLoginState extends Component {
                         <br />
                         <span>Or</span>
                         <div className="login--button">
-                            <Button>Login Anonymous</Button>
+                            <Button onClick={this.anonLogin}>Login Anonymous</Button>
                         </div>
                     </div>
                 </Modal>
@@ -48,10 +48,18 @@ export default class InitialLoginState extends Component {
             }
             this.props.store.userObject = userObject;
             this.props.store.loggedin = true;
-            // console.log(userObject);
         }
         else {
             console.log('Could not authorize');
         }
+    }
+
+    anonLogin = () => {
+        let userObject = {
+            username: `Anonyous ${random.first()}`,
+            img: ""
+        }
+        this.props.store.userObject = userObject;
+        this.props.store.loggedin = true;
     }
 }
