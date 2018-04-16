@@ -12,14 +12,20 @@ export default class Thirdcontainer extends React.Component {
     constructor(props) {
         super(props);
         this.socket = openSocket('localhost:5000', { query: `userName=${this.props.store.userObject.username}` });
+        this.socket.emit('create', this.props.store.current_room);
         this.socket.on('JOINED_ROOM', (data) => {
 
             notification.open({
-                message: `${data.username} joined conversation`,
+                message: `${data.username} joined ${data.room}`,
                 description: 'A new user has joined conversation',
                 icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />,
             });
         });
+    }
+
+    componentDidUpdate() {
+        this.socket.emit('create', this.props.store.current_room);
+        this.props.store.joined_room = this.props.store.current_room;
     }
 
     render() {
@@ -29,6 +35,7 @@ export default class Thirdcontainer extends React.Component {
                     <div className="message--container">
                         <MessageList socket={this.socket} store={this.props.store}/>
                     </div>
+                    <div>Current Room: {this.props.store.current_room}</div>
                 </Row>
             </div>
         )

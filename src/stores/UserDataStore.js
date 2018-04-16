@@ -4,10 +4,9 @@ export class UserDataStore {
     @observable userObject = {
         name: '',
         img: '',
-        current_room: '',
         translation_token: ''
     }
-
+    @observable current_room = 'RoomA';
     @observable loggedin =  false;
 } 
 

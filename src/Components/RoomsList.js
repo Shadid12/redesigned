@@ -23,6 +23,7 @@ export default class RoomsList extends Component {
     }
 
     join = (e) => {
-        this.props.store.userObject.current_room = e.target.value;
+        this.props.store.current_room = e.target.value;
+        console.log(this.props.store.current_room);
     }
 }
