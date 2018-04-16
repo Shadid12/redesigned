@@ -2,16 +2,18 @@ import React from 'react';
 import { List, message, Avatar, Spin, Input } from 'antd';
 import reqwest from 'reqwest';
 import axios from 'axios';
+import { observer } from 'mobx-react';
 
+@observer
 export default class MessageList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
             loading: false,
             hasMore: true,
             message: ''
         }
+        this.room = this.props.store.current_room;
     }
 
     getData = (callback) => {
@@ -28,7 +30,7 @@ export default class MessageList extends React.Component {
 
     getMessages = () => {
         this.props.socket.on('RECEIVE_MESSAGE', (o) => {
-            this.setState({data: [...this.state.data, o]});
+            this.props.store.data = [...this.props.store.data, o];
         });
     }
 
@@ -38,10 +40,14 @@ export default class MessageList extends React.Component {
 
     componentDidUpdate() {
         this.refs.messages.scrollTop = this.refs.messages.scrollHeight;
+        if (this.room !== this.props.store.current_room) {
+            this.props.store.data = [];
+            this.room = this.props.store.current_room;
+        }
     }
 
     handleInfiniteOnLoad = () => {
-        let data = this.state.data;
+        let data = this.props.store.data;
         this.setState({
           loading: true,
         });
@@ -62,7 +68,7 @@ export default class MessageList extends React.Component {
         <div>
             <div className="message-placeholder" ref="messages" >
                     <List
-                        dataSource={this.state.data}
+                        dataSource={this.props.store.data}
                         renderItem={item => (
                         <List.Item key={item.id}>
                             <List.Item.Meta
@@ -84,7 +90,7 @@ export default class MessageList extends React.Component {
                         onKeyPress={this.handleSend}
                         size="large" />
             </div>
-
+            <div style={{ 'visibility': 'none' }}>{this.props.store.current_room}</div>
         </div>
         )
     }

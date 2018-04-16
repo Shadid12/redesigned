@@ -8,6 +8,7 @@ export class UserDataStore {
     }
     @observable current_room = 'RoomA';
     @observable loggedin =  false;
+    @observable data = [];
 } 
 
 export default new UserDataStore();
