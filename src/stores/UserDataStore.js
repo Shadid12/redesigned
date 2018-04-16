@@ -4,6 +4,7 @@ export class UserDataStore {
     @observable userObject = {
         name: '',
         img: '',
+        current_room: '',
         translation_token: ''
     }
 

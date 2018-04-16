@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MainSideNav from './MainSideNav';
 import SecondarySideNav from './SecondarySideNav';
 import ThirdContainer from './Thirdcontainer';
+import RoomsList from './RoomsList';
 import { Row, Col } from 'antd';
 
 // stores
@@ -21,6 +22,9 @@ export default class initialMainState extends Component {
                     </Col>
                     <Col span={8}>
                         <ThirdContainer store={UserDataStore}/>
+                    </Col>
+                    <Col span={2}>
+                        <RoomsList store={UserDataStore} />
                     </Col>
                 </Row>
             </div>

@@ -7,16 +7,7 @@ export default class MessageList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [
-                {
-                    name: "john doe",
-                    message: "Hey this is a message"
-                },
-                {
-                    name: "jane stiffler",
-                    message: "Hello I am here man"
-                }
-            ],
+            data: [],
             loading: false,
             hasMore: true,
             message: ''

@@ -94,7 +94,6 @@ export default class SecondarySideNav extends Component {
     responseGoogle = (response) => {
         if (response.accessToken) {
             this.props.userDataStore.userObject.translation_token = response.accessToken;
-            // axios.defaults.headers.common['Authorization'] = "Bearer " + response.accessToken;
             this.setState({visible: false});
         }
         else {

@@ -1,0 +1,10 @@
+.main-rooms-list-container {
+    display: flex;
+    margin-top: 50px;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.room-name {
+    padding: 5px;
+}
