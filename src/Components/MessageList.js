@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, message, Avatar, Spin, Input } from 'antd';
+import { List, message, Avatar, Spin, Input, Button } from 'antd';
 import reqwest from 'reqwest';
 import axios from 'axios';
 import { observer } from 'mobx-react';
@@ -90,7 +90,16 @@ export default class MessageList extends React.Component {
                         onKeyPress={this.handleSend}
                         size="large" />
             </div>
-            <div style={{ 'visibility': 'none' }}>{this.props.store.current_room}</div>
+            <div 
+                style={{ 'display': 'flex', 'justifyContent': 'center', 'padding': '5px'  }}
+            >
+                <Button 
+                    type="primary"
+                    icon="notification"
+                >
+                    Broadcast {this.props.store.current_room}
+                </Button>
+            </div>
         </div>
         )
     }
