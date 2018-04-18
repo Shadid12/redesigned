@@ -11,7 +11,7 @@ import './css/third-container.css';
 export default class Thirdcontainer extends React.Component {
     constructor(props) {
         super(props);
-        this.socket = openSocket('localhost:5000', { query: `userName=${this.props.store.userObject.username}` });
+        this.socket = openSocket('chitchatsocket.herokuapp.com', { query: `userName=${this.props.store.userObject.username}` });
         this.socket.emit('create', this.props.store.current_room);
         this.socket.on('JOINED_ROOM', (data) => {
 
