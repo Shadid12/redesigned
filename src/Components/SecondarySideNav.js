@@ -32,7 +32,7 @@ export default class SecondarySideNav extends Component {
                             <GoogleLogin
                                 clientId="1043178444240-fit0566r45gcbvog4tei1pour1ba436t.apps.googleusercontent.com"
                                 buttonText="Authorize translation"
-                                scope="https://www.googleapis.com/auth/cloud-translation https://www.googleapis.com/auth/drive"
+                                scope="https://www.googleapis.com/auth/cloud-vision https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/cloud-translation"
                                 onSuccess={this.responseGoogle}
                                 onFailure={this.responseGoogleFail}
                             />

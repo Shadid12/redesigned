@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, message, Avatar, Spin, Input, Button } from 'antd';
+import { List, message, Avatar, Spin, Input, Button, Modal } from 'antd';
 import reqwest from 'reqwest';
 import axios from 'axios';
 import { observer } from 'mobx-react';
@@ -11,7 +11,9 @@ export default class MessageList extends React.Component {
         this.state = {
             loading: false,
             hasMore: true,
-            message: ''
+            message: '',
+            picStats: [],
+            picStatModal: false
         }
         this.room = this.props.store.current_room;
     }
@@ -64,6 +66,18 @@ export default class MessageList extends React.Component {
 
     render() {
         // console.log(this.refs.messages);
+        const img_stat = this.state.picStatModal ? (
+            <Modal title="Image Analytics"
+                visible={this.state.picStatModal}
+                onOk={() => this.setState({picStatModal: false})}
+                >
+                <div>
+                    <li>{this.state.picStats[0].description}</li>
+                    <li>{this.state.picStats[1].description}</li>
+                    <li>{this.state.picStats[2].description}</li>
+                </div>
+            </Modal>
+        ) : null;
         return(
         <div>
             <div className="message-placeholder" ref="messages" >
@@ -71,7 +85,10 @@ export default class MessageList extends React.Component {
                         dataSource={this.props.store.data}
                         renderItem={item => {
                             const analyzeButton = item.img ?  (
-                                <Button> Analyze </Button>
+                                <Button 
+                                    onClick={this.analyzeImage}
+                                    value={item.img}
+                                >Analyze</Button>
                             ) : null;
                             return (
                                 <div>
@@ -111,6 +128,7 @@ export default class MessageList extends React.Component {
                     Broadcast {this.props.store.current_room}
                 </Button>
             </div>
+            {img_stat}
         </div>
         )
     }
@@ -164,5 +182,33 @@ export default class MessageList extends React.Component {
 
     checkURL = (url) => {
         return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+    }
+
+    analyzeImage = (e) => {
+        // axios.defaults.headers.common['Authorization'] = "Bearer " + this.props.store.userObject.translation_token;
+        // console.log(axios.defaults.headers.common['Authorization']);
+        const apiKey='AIzaSyBP5wE0btn_VBAtdvvy9gnxttfWsF6n-mw'
+        axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`,
+            {
+                "requests": [
+                {
+                    "features": [
+                    {
+                        "type": "LABEL_DETECTION"
+                    }
+                    ],
+                    "image": {
+                    "source": {
+                        "imageUri": e.target.value
+                    }
+                    }
+                }
+                ]
+            }
+        )
+        .then((response) => {
+            console.log(response.data.responses[0].labelAnnotations);
+            this.setState({picStats: response.data.responses[0].labelAnnotations, picStatModal: true})
+        })
     }
 }
