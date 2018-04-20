@@ -69,15 +69,26 @@ export default class MessageList extends React.Component {
             <div className="message-placeholder" ref="messages" >
                     <List
                         dataSource={this.props.store.data}
-                        renderItem={item => (
-                        <List.Item key={item.id}>
-                            <List.Item.Meta
-                                avatar={<Avatar style={{ backgroundColor: '#08c' }} icon="user" />}
-                                title={<a href="#">{item.name}</a>}
-                                description={item.message}
-                            />
-                        </List.Item>
-                        )}
+                        renderItem={item => {
+                            const analyzeButton = item.img ?  (
+                                <Button> Analyze </Button>
+                            ) : null;
+                            return (
+                                <div>
+                                    <List.Item 
+                                        key={item.id}
+                                        extra={<img width={272} src={item.img} />}
+                                    >
+                                    <List.Item.Meta
+                                        avatar={<Avatar style={{ backgroundColor: '#08c' }} icon="user" />}
+                                        title={<a href="#">{item.name}</a>}
+                                        description={item.message}
+                                    />
+                                    </List.Item>
+                                    {analyzeButton}
+                                </div>
+                            )
+                        }}
                     >
                         {this.state.loading && this.state.hasMore && <Spin className="demo-loading" />}
                     </List>
@@ -108,8 +119,15 @@ export default class MessageList extends React.Component {
         if (e.key === 'Enter') {
             let d = {
                 name: this.props.store.userObject.username,
-                message: this.state.message
+                message: this.state.message,
+                img: ""
             };
+
+            // check if the message is a image link
+            if (this.checkURL(this.state.message)) {
+                d.message = ""
+                d.img = this.state.message;
+            }
 
             // check if translation enabled 
             if (this.state.message.includes("@translate") && this.props.store.userObject.translation_token ) {
@@ -141,6 +159,10 @@ export default class MessageList extends React.Component {
                     d.message = response.data.data.translations[0].translatedText;
                     this.props.socket.emit('SEND_MESSAGE', d);
                     this.setState({ message: '' });
-    });   
-}
+    });
+    }
+
+    checkURL = (url) => {
+        return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+    }
 }
